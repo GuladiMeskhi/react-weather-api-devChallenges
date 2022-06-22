@@ -1,0 +1,22 @@
+.cardContainer {
+    width:120px;
+    height:177px;
+    background-color:rgba(30,33,58,1);
+    display:flex;
+    align-items: center;
+    transition:0.3s ease-in-out;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.cardText{
+    color:white;
+    font-size:16px;
+    line-height:18.78px;
+}
+
+.cardImg{
+    width:56.44px;
+    height:62px;
+}
+

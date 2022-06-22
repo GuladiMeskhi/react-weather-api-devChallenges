@@ -1,0 +1,49 @@
+  const [latitude,setLatitude] = useState()
+  const [longitude,setLongitude] = useState()
+  // useEffect(() => {
+  //   navigator.geolocation.getCurrentPosition((position) =>{
+  //     setLongitude(position.coords.longitude)
+  //     setLatitude(position.coords.latitude)
+  //   })
+  // },[])
+  // console.log(latitude,longitude)
+
+  // useEffect(() => {
+  //   fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=${apiKey}`)
+  //   .then((response) => response.json())
+  //   .then(response => {
+  //     console.log(response)
+  //   })
+  // },[longitude,latitude])
+
+  // console.log(city)
+
+sidebar
+
+{data.list?.slice(0,1).map((elem) => {
+            return <Sidebar key={Math.floor(Math.random() * 100)} icon={`/assets/${elem.weather[0].icon}.png`} temp={Math.round(elem.main.temp)} weather={elem.weather[0].main} city={data?.city.name}/>
+          }) 
+          }
+
+rest 
+
+ {data.list?.slice(1,6).map((elem) => {
+            return  <Center><Card key={Math.floor(Math.random() * 100)} feelslike={Math.round(elem.main.feels_like)}  icon={`/assets/${elem.weather[0].icon}.png`} temp={Math.round(elem.main.temp)}/></Center>
+                    
+          })}
+          </Wrap>
+          </Flex>
+            <Flex direction='column' justifyContent='space-evenly' w='100%' h='100%' gap="20px" alignItems='center'>
+            <Text fontSize='24px' color='white' maxW='900px' w='100%' minW='400px' marginBlock='15px' textAlign={['center','center','left','left']}>Todays Highlights</Text>
+            {data.list?.slice(0,1).map((elem) => {
+              return <>
+                    <Flex key={Math.floor(Math.random() * 100)} direction={['column','column','column','row']}alignItems='center' maxW='900px' gap='15px' minW='400px' justifyContent='space-evenly'> 
+                        <Windstatus key={Math.floor(Math.random() * 100)} windspeed={elem.wind.speed} windDirection={elem.weather.deg} />
+                        <Humidity key={Math.floor(Math.random() * 100)} humidity={elem.main.humidity} humidityValue={elem.main.humidity}/>
+                    </Flex>
+                    <Flex key={Math.floor(Math.random() * 100)} direction={['column','column','column','row']}alignItems='center' maxW='900px' gap='15px' minW='400px' justifyContent='space-evenly'>
+                      <Airpressure key={Math.floor(Math.random() * 100)} airpressure={elem.main.pressure}/>
+                      <Visibility key={Math.floor(Math.random() * 100)} visibility={elem.visibility/1000}/>
+                    </Flex>
+                    </>
+            })}

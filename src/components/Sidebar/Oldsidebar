@@ -1,0 +1,31 @@
+<Flex w={['100%','100%','300px','380px']} minH='100vh' paddingBlock='40px' h='100%' maxH='100vh'  bg='rgba(30, 33, 58, 1)'>
+            <VStack justifyContent='space-around'>
+                {/* Sidebar top CTA button */}
+                <Flex w={['100%','100%','300px','380px']} justifyContent='space-evenly'>
+                    <Button minW='100px' fontSize='12px' bg='rgba(110, 112, 122, 1)'
+                        rounded={0} color='white' h='40px' onClick={handleOpen}
+                        _hover={{backgroundColor:'rgba(110, 112, 122, 0.7)'}}
+                        >Search for places</Button>
+                    <Button padding={0} w='30px' h='40px' rounded='50%' 
+                            bg='rgba(110, 112, 122, 1)' _hover={{backgroundColor:'rgba(110, 112, 122, 0.7)'}}>
+                        <BiCurrentLocation color="white" fontSize='24px'/>
+                    </Button>
+                </Flex>
+                {/* big celsius */}
+                <Flex backgroundImage='/assets/Cloud-background.png' w={['100%','100%','300px','380px']} h={['200px','280px','320px','320px']} 
+                        backgroundSize={['350px','350px','475px','520px']} backgroundPosition='50% 1%' opacity='0.2'
+                        backgroundRepeat='none'>
+                </Flex>
+                <Box w='100px' pos='absolute' top='30%' h='100px' _css={{opacity:'1 !important'}}>
+                        <Image src={icon}></Image>
+                </Box>
+                <Flex w='300px' h='fit-content' justifyContent='center'>
+                    <Text fontSize='64px' fontWeight='600' color='white'>{temp} <span style={{fontSize:'44px',color:'gray'}}>c°</span></Text>
+                </Flex>
+                <Flex w='300px' h='fit-content' alignItems='center' direction='column' gap='5px'>
+                    <Text color='gray' fontSize='24px' fontWeight='700'>{weather}</Text>
+                    <Text color='gray' fontSize='14px'>{today} • {weekday}</Text>
+                    <Text fontSize='14px' color='gray'> {city}</Text>
+                </Flex>
+            </VStack>
+        </Flex>

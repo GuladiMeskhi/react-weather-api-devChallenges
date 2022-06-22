@@ -1,23 +1,135 @@
-import logo from './logo.svg';
-import './App.css';
+import { Sidebar } from "./components/Sidebar/Sidebar";
+import { Card } from "./components/Card/Card";
+import { useState,useEffect } from "react";
+import { Humidity } from "./components/Humidity/Humidity";
+import { Windstatus } from "./components/Windstatus/Windstatus";
+import { Visibility } from "./components/Visibility/Visibility";
+import { Airpressure } from "./components/Airpressure/Airpressure";
+import { Search } from "./components/Search/Search";
+import Backdrop from "./components/Backdrop/Backdrop";
+import { getDateFormat } from "./Utils/getDateFormat";
+import { certainDate } from "./Utils/certainDate";
+import './App.css'
+import axios from "axios";
 
 function App() {
+  const apiKey = '3861861316ef407f1ab0c6abab37a421'
+
+  const [latitude,setLatitude] = useState()
+  const [longitude,setLongitude] = useState()
+  const [data,setData] = useState([{}])
+  const [city,setCity] = useState('tbilisi')
+  const [isOpen,setOpen] = useState(false)
+  const [backdrop,setBackdrop] = useState(false) 
+  const [cactive,setCactive] = useState('celsiusBTN active')
+  const [factive,setFactive] = useState('celsiusBTN')
+  const [units,setUnits] = useState('units=metric')
+  const [symbol,setSymbol] = useState('°C')
+
+  function handleOpen() {
+      setOpen(true)
+      setBackdrop(true)
+  }
+  function handle(){
+      setOpen(false)
+      setBackdrop(false)
+  }
+
+  function handleCelsius(){
+    setFactive('celsiusBTN')
+    setCactive('celsiusBTN active')
+    setUnits('units=metric')
+    setSymbol('°C')
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+    .then((response) => {
+      setData(response.data)
+    })
+  }
+
+  function handleFarenheit(){
+    setCactive('celsiusBTN')
+    setFactive('celsiusBTN active')
+    setUnits('units=imperial')
+    setSymbol('°F')
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+    .then((response) => {
+      setData(response.data)
+    })
+  }
+
+  function getCurrentPosition(){
+    navigator.geolocation.getCurrentPosition((position) =>{
+      setLongitude(position.coords.longitude)
+      setLatitude(position.coords.latitude)
+    })
+    fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=5&appid=a9fa4983f61fe815e73e8d6d7ece4b32`)
+    .then((response) => response.json())
+    .then(response => {
+      setCity(response[0].name)
+    })
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+    .then((response) => {
+      setData(response.data)
+    })
+  }
+
+  useEffect(() => {
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+    .then((response) => {
+      setData(response.data)
+    })
+  },[])
+
+  function handleRequest(){
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+      .then((response) => {
+        setData(response.data)
+      })
+      handle();
+  }
+
+  
+
+  let fileList = data.list?.filter((elem,index) => index === 4 || index === 12 || index === 23 || index === 29 || index === 39 )
+
+
+  // temp,weather,today,weekday,city
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+          {backdrop && <Backdrop handleClose={handle}/>}
+          {isOpen ? <Search handleChange={(e) => setCity(e.target.value)} handleClick={handleRequest} /> :null}
+          <div className='fake-sidebar'>
+          {data.list?.slice(0,1).map((elem) => {
+            return <Sidebar handleLocation={getCurrentPosition} symbol={symbol} key={Math.floor(Math.random() * 100999)} weekday={getDateFormat(elem.dt_txt)} handleOpen={handleOpen} icon={`/assets/${elem.weather[0].icon}.png`} temp={Math.round(elem.main.temp)} weather={elem.weather[0].main} city={data?.city.name}/>
+          }) 
+          }
+          </div>
+          <div className='half'>
+            <div className='halfCTA'>
+              <button className={cactive} onClick={handleCelsius}>°C</button>
+              <button className={factive} onClick={handleFarenheit}>°F</button>
+            </div>
+            <div className="card-grid">
+            {fileList?.map((elem) => {
+            return  <Card key={Math.floor(Math.random() * 100999)} symbol={symbol} weekday={getDateFormat(elem.dt_txt)} feelslike={Math.round(elem.main.feels_like)}  icon={`/assets/${elem.weather[0].icon}.png`} temp={Math.round(elem.main.temp)}/>
+                    
+            })}
+            </div>
+            <div className="support-block">
+            </div>
+            <h1>Todays Highlights</h1>
+            <div className='todays-grid'>
+            {data.list?.slice(0,1).map((elem) => {
+              return <>
+                        <Windstatus key={Math.floor(Math.random() * 100999)} windspeed={elem.wind.speed} windDirection={elem.weather.deg} />
+                        <Humidity key={Math.floor(Math.random() * 100999)} humidity={elem.main.humidity} humidityValue={elem.main.humidity}/>
+                      <Airpressure key={Math.floor(Math.random() * 100999)} airpressure={elem.main.pressure}/>
+                      <Visibility key={Math.floor(Math.random() * 100999)} visibility={elem.visibility/1000}/>
+                    </>
+            })}
+            <p style={{color:'white',fontSize:'14px',textAlign:'center'}}> Created by <a href='https://guladimeskhi.github.io/Portfolio/' style={{color:'blue'}}>Guladi Meskhi</a> - devChallenges.io</p>
+            </div>
+          </div>
     </div>
   );
 }

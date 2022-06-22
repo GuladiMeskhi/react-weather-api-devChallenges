@@ -1,38 +1,131 @@
-.App {
-  text-align: center;
+.App{
+    min-width:100vw;
+    background:rgba(16, 14, 29, 1);
+    display:flex;
+    flex-direction: row;
+    max-height: fit-content;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+
+@media (max-width:725px){
+    .App{
+        width:100%;
+        flex-direction: column;
+    }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.half {
+    width:100%;
+    display:grid;
+    justify-content: center;
+    align-items: center;
+    padding-block:50px;
+    max-height:fit-content;
+    grid-template-columns: 6,1fr;
+    gap:50px;
+    min-height: 100vh;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.card-grid {
+    display: grid;
+    gap:15px;
+    grid-template-columns: repeat(5,125px);
 }
 
-.App-link {
-  color: #61dafb;
+@media (max-width:965px){
+    .card-grid{
+        display:grid;
+        grid-template-columns: repeat(3,125px);
+    }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@media (max-width:565px){
+    .card-grid{
+        display:grid;
+        grid-template-columns: repeat(2,125px);
+    }
+}
+
+.half h1{
+    font-size:34px;
+    color:white;
+    font-weight:700;
+}
+
+.todays-grid {
+    display:grid;
+    gap:30px;
+    grid-template-columns: repeat(2,320px);
+}
+
+@media (max-width:965px){
+    .todays-grid{
+        display:grid;
+        grid-template-columns: 300px;
+    }
+}
+
+.fake-sidebar{
+    width:475px;
+}
+
+@media (max-width:1200px){
+    .fake-sidebar{
+        width:300px;
+    }
+}
+
+@media (max-width:1024px){
+    .fake-sidebar{
+        width:275px
+    }
+}
+
+@media (max-width:725px){
+    .fake-sidebar{
+        width:100%;
+        position:static;
+    }
+}
+
+.support-block{
+    height:50px;
+    display:none;
+}
+
+@media (max-width:1024px){
+    .support-block{
+        display:block;
+    }
+}
+
+@media (max-width:725px){
+    .support-block{
+        width:100%;
+        position:block;
+    }
+}
+
+.halfCTA{
+    display: flex;
+    justify-content: flex-end;
+    gap:10px;
+}
+
+.celsiusBTN{
+    background-color: rgba(88, 86, 118, 1);
+    width: 30px;
+    font-size:16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color:white;
+    height: 30px;
+    border-radius:50%;
+    font-weight: 700;
+}
+
+.celsiusBTN.active{
+    background:white;
+    color:rgba(88, 86, 118, 1);
 }
