@@ -8,10 +8,10 @@ export const Search = ({handleClick,handleChange,text}) => {
   return (
     <>
       <div className={classes.searchContainer}>
-        <span className={classes.sidebarCta}>
+      <span className={classes.sidebarCta}>
                 <input className={classes.sidebarBtn} placeholder='type city...' value={text} type='text' name='text' onChange={handleChange}/>
-                <button className={classes.navigatorBtn} onClick={handleClick}>Search</button>    
-          </span> 
+                <button className={classes.navigatorBtn} cursor="pointer" onClick={handleClick}>Search</button>    
+        </span>
       </div>
     </>
   )

@@ -36,25 +36,23 @@ function App() {
   }
 
   function handleCelsius(){
-    setFactive('celsiusBTN')
-    setCactive('celsiusBTN active')
-    setUnits('units=metric')
-    setSymbol('°C')
-    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
     .then((response) => {
       setData(response.data)
     })
+    setFactive('celsiusBTN')
+    setCactive('celsiusBTN active')
+    setSymbol('°C')
   }
 
   function handleFarenheit(){
-    setCactive('celsiusBTN')
-    setFactive('celsiusBTN active')
-    setUnits('units=imperial')
-    setSymbol('°F')
-    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
     .then((response) => {
       setData(response.data)
     })
+    setCactive('celsiusBTN')
+    setFactive('celsiusBTN active')
+    setSymbol('°F')
   }
 
   function getCurrentPosition(){
@@ -81,10 +79,19 @@ function App() {
   },[])
 
   function handleRequest(){
-    axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&${units}`)
+    if(symbol === '°C'){
+      axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
       .then((response) => {
         setData(response.data)
       })
+    }
+    if(symbol === '°F'){
+      axios.get(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=imperial`)
+      .then((response) => {
+        setData(response.data)
+      })
+    }
+
       handle();
   }
 
@@ -127,8 +134,10 @@ function App() {
                       <Visibility key={Math.floor(Math.random() * 100999)} visibility={elem.visibility/1000}/>
                     </>
             })}
-            <p style={{color:'white',fontSize:'14px',textAlign:'center'}}> Created by <a href='https://guladimeskhi.github.io/Portfolio/' style={{color:'blue'}}>Guladi Meskhi</a> - devChallenges.io</p>
             </div>
+            <div className="support-block" style={{height:'100px'}}>
+            </div>
+            <p style={{color:'white',fontSize:'14px',textAlign:'center'}}> Created by <a href='https://guladimeskhi.github.io/Portfolio/' style={{color:'blue'}}>Guladi Meskhi</a> - devChallenges.io</p>
           </div>
     </div>
   );

@@ -10,7 +10,7 @@ export const Sidebar = ({temp,weather,weekday,city,icon,handleOpen,handleLocatio
         <div className={classes.sidebarContainer}>
            <span className={classes.sidebarCta}>
                  <button className={classes.sidebarBtn} onClick={handleOpen}>Search for places</button>
-                <div className={classes.navigatorBtn} onClick={handleLocation}><BiCurrentLocation color='white' fontSize='36px'/></div>    
+                <button className={classes.navigatorBtn} onClick={handleLocation}><BiCurrentLocation color='white' fontSize='36px'/></button>   
             </span>
             <img className={classes.sidebarIcon} src={icon} alt='img'/>
             <p className={classes.sidebarCelsius}>{temp}<span style={{fontSize:'48px',color:'gray'}}>{symbol}</span></p>
