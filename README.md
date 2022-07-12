@@ -7,7 +7,7 @@ Create a weather app using an API. Use Front-end libraries like React or Vue. Do
 - [x] **User story**: I can see the date and location of the weather
 - [x] **User story**: I can see according to image for each type of weather
 - [x] **User story**: I can see the min and max degree each day
-- [] **User story**: I can see wind status and wind direction
+- [-] **User story**: I can see wind status and wind direction
 - [x] **User story**: I can see humidity percentage
 - [x] **User story**: I can see a visibility indicator
 - [x] **User story**: I can see the air pressure number
